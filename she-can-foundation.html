@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>She Can Foundation — Connect With Us</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── RESET & BASE ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #fdf6f0;
+      --surface:   #ffffff;
+      --rose:      #c0627a;
+      --rose-deep: #8e3a50;
+      --rose-pale: #f5d6dc;
+      --blush:     #f0e0e5;
+      --ink:       #2a1a20;
+      --ink-mid:   #6b4455;
+      --ink-soft:  #b08090;
+      --border:    #e8cdd4;
+      --success:   #4caf7d;
+      --error:     #e05c6a;
+      --shadow:    0 8px 40px rgba(142, 58, 80, 0.12);
+      --font-head: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--ink);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── DECORATIVE BG ────────────────────────────────────────── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 0% 0%,   rgba(192,98,122,.13) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 60% at 100% 100%, rgba(240,224,229,.5) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    /* ── HEADER ───────────────────────────────────────────────── */
+    header {
+      position: relative; z-index: 10;
+      padding: 2.4rem 2rem 2rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+      background: rgba(255,255,255,.6);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo-mark {
+      display: inline-flex; align-items: center; gap: .6rem;
+      margin-bottom: .9rem;
+      animation: fadeDown .7s ease both;
+    }
+
+    .logo-icon {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+      display: grid; place-items: center;
+      font-size: 1.2rem;
+      box-shadow: 0 4px 14px rgba(142,58,80,.3);
+    }
+
+    .logo-text {
+      font-family: var(--font-head);
+      font-size: 1.15rem; font-weight: 600;
+      letter-spacing: .04em;
+      color: var(--rose-deep);
+    }
+
+    header h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 400; line-height: 1.15;
+      color: var(--ink);
+      animation: fadeDown .8s .1s ease both;
+    }
+
+    header h1 em { color: var(--rose); font-style: italic; }
+
+    header p {
+      margin-top: .7rem;
+      font-size: .92rem; color: var(--ink-mid);
+      font-weight: 300; letter-spacing: .01em;
+      animation: fadeDown .8s .2s ease both;
+    }
+
+    /* ── NAV PILLS ────────────────────────────────────────────── */
+    nav {
+      position: relative; z-index: 10;
+      display: flex; justify-content: center; gap: .5rem;
+      padding: 1.2rem 2rem;
+      animation: fadeDown .8s .3s ease both;
+    }
+
+    nav button {
+      font-family: var(--font-body);
+      font-size: .82rem; font-weight: 500;
+      padding: .45rem 1.2rem; border-radius: 999px;
+      border: 1.5px solid var(--border);
+      background: transparent; color: var(--ink-mid);
+      cursor: pointer; transition: all .25s ease;
+      letter-spacing: .03em;
+    }
+
+    nav button.active,
+    nav button:hover {
+      background: var(--rose-deep); color: #fff;
+      border-color: var(--rose-deep);
+      box-shadow: 0 4px 14px rgba(142,58,80,.25);
+    }
+
+    /* ── MAIN CONTAINER ───────────────────────────────────────── */
+    main {
+      position: relative; z-index: 5;
+      max-width: 680px; margin: 0 auto;
+      padding: 2rem 1.2rem 5rem;
+    }
+
+    /* ── PANEL ────────────────────────────────────────────────── */
+    .panel {
+      display: none;
+      animation: fadeUp .5s ease both;
+    }
+    .panel.active { display: block; }
+
+    /* ── CARD ─────────────────────────────────────────────────── */
+    .card {
+      background: var(--surface);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+    }
+
+    .card-header {
+      padding: 2rem 2.5rem 1.4rem;
+      border-bottom: 1px solid var(--blush);
+      background: linear-gradient(135deg, #fff 60%, var(--rose-pale));
+    }
+
+    .card-header h2 {
+      font-family: var(--font-head);
+      font-size: 1.8rem; font-weight: 600;
+      color: var(--rose-deep);
+    }
+
+    .card-header p {
+      font-size: .85rem; color: var(--ink-soft);
+      margin-top: .3rem; font-weight: 300;
+    }
+
+    .card-body { padding: 2.2rem 2.5rem; }
+
+    /* ── FORM FIELD ───────────────────────────────────────────── */
+    .field { margin-bottom: 1.5rem; position: relative; }
+
+    label {
+      display: flex; align-items: center; gap: .4rem;
+      font-size: .8rem; font-weight: 500;
+      letter-spacing: .06em; text-transform: uppercase;
+      color: var(--ink-mid); margin-bottom: .5rem;
+    }
+
+    label .req { color: var(--rose); font-size: .9rem; }
+
+    input, textarea, select {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: .96rem;
+      padding: .85rem 1.1rem;
+      border: 1.5px solid var(--border);
+      border-radius: 10px;
+      background: var(--bg);
+      color: var(--ink);
+      outline: none;
+      transition: border-color .2s, box-shadow .2s, background .2s;
+      -webkit-appearance: none;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--rose);
+      background: #fff;
+      box-shadow: 0 0 0 3px rgba(192,98,122,.12);
+    }
+
+    input.invalid, textarea.invalid {
+      border-color: var(--error);
+      box-shadow: 0 0 0 3px rgba(224,92,106,.1);
+    }
+
+    input.valid, textarea.valid {
+      border-color: var(--success);
+    }
+
+    textarea { resize: vertical; min-height: 120px; }
+
+    .field-hint {
+      font-size: .75rem; margin-top: .35rem;
+      color: var(--ink-soft);
+    }
+
+    .error-msg {
+      font-size: .75rem; margin-top: .35rem;
+      color: var(--error); display: none;
+    }
+
+    .field.has-error .error-msg { display: block; }
+    .field.has-error .field-hint { display: none; }
+
+    /* char counter */
+    .char-counter {
+      position: absolute; right: 10px; bottom: 10px;
+      font-size: .72rem; color: var(--ink-soft);
+      pointer-events: none;
+    }
+
+    /* ── SUBJECT SELECT ───────────────────────────────────────── */
+    .select-wrap { position: relative; }
+    .select-wrap::after {
+      content: '▾';
+      position: absolute; right: 14px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--ink-soft); pointer-events: none;
+    }
+
+    /* ── SUBMIT BUTTON ────────────────────────────────────────── */
+    .btn-submit {
+      width: 100%;
+      font-family: var(--font-body);
+      font-size: 1rem; font-weight: 500;
+      letter-spacing: .04em;
+      padding: 1rem;
+      border: none; border-radius: 12px;
+      background: linear-gradient(135deg, var(--rose), var(--rose-deep));
+      color: #fff; cursor: pointer;
+      box-shadow: 0 6px 20px rgba(142,58,80,.3);
+      transition: transform .18s, box-shadow .18s, opacity .18s;
+      position: relative; overflow: hidden;
+    }
+
+    .btn-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(142,58,80,.38);
+    }
+
+    .btn-submit:active { transform: translateY(0); }
+
+    .btn-submit.loading { opacity: .75; pointer-events: none; }
+
+    .btn-submit .spinner {
+      display: none;
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,.4);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin .7s linear infinite;
+      margin: 0 auto;
+    }
+
+    .btn-submit.loading .btn-text { display: none; }
+    .btn-submit.loading .spinner { display: block; }
+
+    /* ── SUCCESS STATE ────────────────────────────────────────── */
+    .success-box {
+      display: none; text-align: center;
+      padding: 2.5rem 2rem;
+      animation: fadeUp .5s ease both;
+    }
+
+    .success-box.show { display: block; }
+
+    .success-icon {
+      width: 70px; height: 70px; border-radius: 50%;
+      background: linear-gradient(135deg, #4caf7d, #3d9c6e);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 2rem; margin: 0 auto 1.4rem;
+      box-shadow: 0 8px 24px rgba(76,175,125,.3);
+      animation: popIn .5s .1s cubic-bezier(.34,1.56,.64,1) both;
+    }
+
+    .success-box h3 {
+      font-family: var(--font-head);
+      font-size: 1.9rem; color: var(--rose-deep);
+      margin-bottom: .5rem;
+    }
+
+    .success-box p {
+      font-size: .9rem; color: var(--ink-mid);
+      line-height: 1.65; margin-bottom: 1.4rem;
+    }
+
+    .btn-another {
+      font-family: var(--font-body);
+      font-size: .88rem; font-weight: 500;
+      padding: .6rem 1.6rem; border-radius: 999px;
+      border: 1.5px solid var(--rose); color: var(--rose);
+      background: transparent; cursor: pointer;
+      transition: all .2s;
+    }
+    .btn-another:hover { background: var(--rose); color: #fff; }
+
+    /* ── ADMIN PANEL ──────────────────────────────────────────── */
+    .admin-header {
+      display: flex; align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.4rem; gap: 1rem; flex-wrap: wrap;
+    }
+
+    .admin-header h2 {
+      font-family: var(--font-head);
+      font-size: 1.6rem; color: var(--rose-deep);
+    }
+
+    .badge {
+      background: var(--rose-pale); color: var(--rose-deep);
+      font-size: .75rem; font-weight: 600;
+      padding: .2rem .65rem; border-radius: 999px;
+      border: 1px solid var(--border);
+    }
+
+    .admin-actions { display: flex; gap: .5rem; flex-wrap: wrap; }
+
+    .btn-sm {
+      font-family: var(--font-body);
+      font-size: .78rem; font-weight: 500; letter-spacing: .03em;
+      padding: .4rem .9rem; border-radius: 8px;
+      border: 1.5px solid var(--border);
+      background: #fff; color: var(--ink-mid);
+      cursor: pointer; transition: all .2s;
+    }
+    .btn-sm:hover { border-color: var(--rose); color: var(--rose); }
+    .btn-sm.danger:hover { border-color: var(--error); color: var(--error); background: #fff5f5; }
+
+    /* search bar */
+    .search-bar {
+      margin-bottom: 1.2rem; position: relative;
+    }
+    .search-bar input {
+      padding-left: 2.5rem;
+      border-radius: 10px;
+    }
+    .search-bar .search-icon {
+      position: absolute; left: 12px; top: 50%;
+      transform: translateY(-50%);
+      color: var(--ink-soft); font-size: .95rem;
+      pointer-events: none;
+    }
+
+    /* table */
+    .table-wrap {
+      overflow-x: auto;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+    }
+
+    table {
+      width: 100%; border-collapse: collapse;
+      font-size: .85rem;
+    }
+
+    thead { background: var(--blush); }
+
+    th {
+      padding: .85rem 1rem;
+      text-align: left;
+      font-size: .72rem; font-weight: 600;
+      letter-spacing: .07em; text-transform: uppercase;
+      color: var(--ink-mid); white-space: nowrap;
+    }
+
+    td {
+      padding: .85rem 1rem;
+      border-top: 1px solid var(--blush);
+      color: var(--ink); vertical-align: top;
+    }
+
+    tr:hover td { background: #fffbfc; }
+
+    .td-name { font-weight: 500; }
+    .td-email { color: var(--rose); word-break: break-all; }
+    .td-msg { color: var(--ink-mid); max-width: 180px; }
+    .td-msg-text {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+    }
+    .td-date { color: var(--ink-soft); white-space: nowrap; font-size: .78rem; }
+
+    .btn-del {
+      background: none; border: none;
+      color: var(--ink-soft); font-size: 1rem;
+      cursor: pointer; padding: .2rem .4rem;
+      border-radius: 6px; transition: all .2s;
+    }
+    .btn-del:hover { background: #ffeef0; color: var(--error); }
+
+    .empty-state {
+      text-align: center; padding: 3.5rem 2rem;
+      color: var(--ink-soft);
+    }
+    .empty-state .empty-icon { font-size: 2.5rem; margin-bottom: .7rem; }
+    .empty-state p { font-size: .9rem; }
+
+    /* stats row */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1rem; margin-bottom: 1.4rem;
+    }
+
+    .stat-card {
+      background: #fff; border: 1px solid var(--border);
+      border-radius: 14px; padding: 1.1rem 1.3rem;
+      text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,.04);
+    }
+
+    .stat-card .stat-num {
+      font-family: var(--font-head);
+      font-size: 2rem; color: var(--rose-deep);
+      line-height: 1;
+    }
+
+    .stat-card .stat-label {
+      font-size: .72rem; text-transform: uppercase;
+      letter-spacing: .07em; color: var(--ink-soft);
+      margin-top: .25rem; font-weight: 500;
+    }
+
+    /* ── TOAST ────────────────────────────────────────────────── */
+    .toast {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 100;
+      background: var(--ink); color: #fff;
+      font-size: .85rem; padding: .75rem 1.3rem;
+      border-radius: 12px; box-shadow: 0 8px 28px rgba(0,0,0,.2);
+      opacity: 0; transform: translateY(10px);
+      transition: opacity .3s, transform .3s;
+      pointer-events: none; max-width: 260px;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+
+    /* ── ANIMATIONS ───────────────────────────────────────────── */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(14px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes popIn {
+      from { opacity: 0; transform: scale(.5); }
+      to   { opacity: 1; transform: scale(1); }
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── FOOTER ───────────────────────────────────────────────── */
+    footer {
+      position: relative; z-index: 5;
+      text-align: center; padding: 1.5rem;
+      font-size: .78rem; color: var(--ink-soft);
+      border-top: 1px solid var(--border);
+    }
+
+    footer span { color: var(--rose); }
+
+    /* ── RESPONSIVE ───────────────────────────────────────────── */
+    @media (max-width: 540px) {
+      .card-header, .card-body { padding: 1.5rem 1.3rem; }
+      .stats-row { grid-template-columns: repeat(3,1fr); gap: .5rem; }
+      .stat-card { padding: .8rem .6rem; }
+      .stat-card .stat-num { font-size: 1.5rem; }
+      nav button { padding: .4rem .8rem; font-size: .76rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ── HEADER ──────────────────────────────────────────────────── -->
+<header>
+  <div class="logo-mark">
+    <div class="logo-icon">🌸</div>
+    <span class="logo-text">She Can Foundation</span>
+  </div>
+  <h1>Every voice <em>matters</em></h1>
+  <p>Reach out to us — we read every message with care.</p>
+</header>
+
+<!-- ── NAV ─────────────────────────────────────────────────────── -->
+<nav>
+  <button class="active" onclick="switchPanel('form', this)">✉️ Contact Us</button>
+  <button onclick="switchPanel('admin', this)">📊 Admin Panel</button>
+</nav>
+
+<!-- ── MAIN ─────────────────────────────────────────────────────── -->
+<main>
+
+  <!-- CONTACT FORM PANEL -->
+  <div id="panel-form" class="panel active">
+    <div class="card">
+      <div class="card-header">
+        <h2>Send a Message</h2>
+        <p>Fields marked with <span style="color:var(--rose)">*</span> are required.</p>
+      </div>
+      <div class="card-body">
+
+        <!-- SUCCESS BOX -->
+        <div class="success-box" id="success-box">
+          <div class="success-icon">✓</div>
+          <h3>Form Submitted Successfully!</h3>
+          <p>Thank you for reaching out to She Can Foundation.<br>We'll get back to you within 2–3 business days.</p>
+          <button class="btn-another" onclick="resetForm()">Send Another Message</button>
+        </div>
+
+        <!-- FORM -->
+        <form id="contact-form" novalidate>
+
+          <!-- NAME -->
+          <div class="field" id="field-name">
+            <label>Full Name <span class="req">*</span></label>
+            <input type="text" id="name" placeholder="e.g. Priya Sharma"
+              autocomplete="name" maxlength="80"/>
+            <div class="error-msg" id="err-name">Please enter your full name (min 2 characters).</div>
+          </div>
+
+          <!-- EMAIL -->
+          <div class="field" id="field-email">
+            <label>Email Address <span class="req">*</span></label>
+            <input type="email" id="email" placeholder="you@example.com"
+              autocomplete="email"/>
+            <div class="error-msg" id="err-email">Please enter a valid email address.</div>
+          </div>
+
+          <!-- PHONE (optional) -->
+          <div class="field" id="field-phone">
+            <label>Phone Number <span style="font-size:.7rem;color:var(--ink-soft);text-transform:none;letter-spacing:0">(optional)</span></label>
+            <input type="tel" id="phone" placeholder="+91 XXXXX XXXXX"
+              autocomplete="tel" maxlength="15"/>
+            <div class="field-hint">We may use this for follow-up calls only.</div>
+            <div class="error-msg" id="err-phone">Enter a valid phone number (10+ digits).</div>
+          </div>
+
+          <!-- SUBJECT -->
+          <div class="field">
+            <label>Subject <span class="req">*</span></label>
+            <div class="select-wrap">
+              <select id="subject">
+                <option value="">— Select a topic —</option>
+                <option value="Volunteering">Volunteering Opportunity</option>
+                <option value="Donation">Donation / Sponsorship</option>
+                <option value="Partnership">Partnership Inquiry</option>
+                <option value="Programme">Programme Information</option>
+                <option value="Media">Media / Press</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div class="error-msg" id="err-subject">Please select a subject.</div>
+          </div>
+
+          <!-- MESSAGE -->
+          <div class="field" id="field-message" style="position:relative">
+            <label>Message <span class="req">*</span></label>
+            <textarea id="message" placeholder="Write your message here…" maxlength="600"
+              oninput="updateCounter()"></textarea>
+            <span class="char-counter"><span id="char-count">0</span>/600</span>
+            <div class="error-msg" id="err-message">Please write a message (min 10 characters).</div>
+          </div>
+
+          <!-- CONSENT -->
+          <div class="field" id="field-consent" style="display:flex;gap:.8rem;align-items:flex-start;margin-bottom:1.8rem">
+            <input type="checkbox" id="consent" style="width:auto;margin-top:.2rem;accent-color:var(--rose)"/>
+            <label for="consent" style="text-transform:none;letter-spacing:0;font-size:.83rem;font-weight:400;color:var(--ink-mid)">
+              I agree to She Can Foundation's Privacy Policy and consent to being contacted. <span class="req">*</span>
+            </label>
+          </div>
+          <div class="error-msg" id="err-consent" style="margin-top:-1rem;margin-bottom:1rem">You must accept the consent checkbox.</div>
+
+          <button type="button" class="btn-submit" onclick="handleSubmit()">
+            <span class="btn-text">Send Message →</span>
+            <div class="spinner"></div>
+          </button>
+
+        </form>
+      </div><!-- card-body -->
+    </div><!-- card -->
+  </div><!-- panel-form -->
+
+
+  <!-- ADMIN PANEL -->
+  <div id="panel-admin" class="panel">
+    <div class="admin-header">
+      <div style="display:flex;align-items:center;gap:.7rem">
+        <h2>Submissions</h2>
+        <span class="badge" id="total-badge">0 total</span>
+      </div>
+      <div class="admin-actions">
+        <button class="btn-sm" onclick="exportCSV()">⬇ Export CSV</button>
+        <button class="btn-sm danger" onclick="clearAll()">🗑 Clear All</button>
+      </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num" id="stat-total">0</div>
+        <div class="stat-label">Total</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-today">0</div>
+        <div class="stat-label">Today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" id="stat-week">0</div>
+        <div class="stat-label">This Week</div>
+      </div>
+    </div>
+
+    <!-- Search -->
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="text" id="search-input" placeholder="Search by name, email, subject…"
+        oninput="renderTable()" style="background:#fff"/>
+    </div>
+
+    <!-- Table -->
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="submissions-body"></tbody>
+      </table>
+    </div>
+
+  </div><!-- panel-admin -->
+
+</main>
+
+<!-- ── TOAST ────────────────────────────────────────────────────── -->
+<div class="toast" id="toast"></div>
+
+<!-- ── FOOTER ───────────────────────────────────────────────────── -->
+<footer>
+  Made with <span>♥</span> for She Can Foundation &nbsp;·&nbsp; &copy; 2024
+</footer>
+
+<!-- ── JAVASCRIPT ────────────────────────────────────────────────── -->
+<script>
+  /* ── DATA STORE (localStorage "DB") ─────────────────────────── */
+  const DB_KEY = 'sce_submissions';
+
+  function getSubmissions() {
+    try { return JSON.parse(localStorage.getItem(DB_KEY)) || []; }
+    catch { return []; }
+  }
+
+  function saveSubmission(entry) {
+    const list = getSubmissions();
+    list.unshift(entry); // newest first
+    localStorage.setItem(DB_KEY, JSON.stringify(list));
+  }
+
+  function deleteSubmission(id) {
+    const list = getSubmissions().filter(s => s.id !== id);
+    localStorage.setItem(DB_KEY, JSON.stringify(list));
+  }
+
+  function clearSubmissions() {
+    localStorage.removeItem(DB_KEY);
+  }
+
+  /* ── PANEL SWITCHING ─────────────────────────────────────────── */
+  function switchPanel(name, btn) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('nav button').forEach(b => b.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    btn.classList.add('active');
+    if (name === 'admin') renderTable();
+  }
+
+  /* ── VALIDATION ──────────────────────────────────────────────── */
+  function validate() {
+    let ok = true;
+
+    // Name
+    const name = document.getElementById('name').value.trim();
+    setFieldState('name', name.length >= 2, 'Please enter your full name (min 2 characters).');
+    if (name.length < 2) ok = false;
+
+    // Email
+    const email = document.getElementById('email').value.trim();
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    setFieldState('email', emailRe.test(email), 'Please enter a valid email address.');
+    if (!emailRe.test(email)) ok = false;
+
+    // Phone (optional, but validate if filled)
+    const phone = document.getElementById('phone').value.trim();
+    if (phone) {
+      const phoneDigits = phone.replace(/\D/g, '');
+      const pOk = phoneDigits.length >= 10;
+      setFieldState('phone', pOk, 'Enter a valid phone number (10+ digits).');
+      if (!pOk) ok = false;
+    } else {
+      clearFieldState('phone');
+    }
+
+    // Subject
+    const subject = document.getElementById('subject').value;
+    const subOk = subject !== '';
+    document.getElementById('field-subject') && setFieldState('subject', subOk, 'Please select a subject.');
+    // subject doesn't have a field-id wrapper but we show err inline
+    const errSub = document.getElementById('err-subject');
+    errSub.style.display = subOk ? 'none' : 'block';
+    if (!subOk) ok = false;
+
+    // Message
+    const msg = document.getElementById('message').value.trim();
+    setFieldState('message', msg.length >= 10, 'Please write a message (min 10 characters).');
+    if (msg.length < 10) ok = false;
+
+    // Consent
+    const consent = document.getElementById('consent').checked;
+    const errC = document.getElementById('err-consent');
+    errC.style.display = consent ? 'none' : 'block';
+    if (!consent) ok = false;
+
+    return ok;
+  }
+
+  function setFieldState(id, isValid, errText) {
+    const input = document.getElementById(id);
+    const field = document.getElementById('field-' + id);
+    const err   = document.getElementById('err-' + id);
+    if (!input) return;
+    input.classList.toggle('valid',   isValid);
+    input.classList.toggle('invalid', !isValid);
+    if (field) field.classList.toggle('has-error', !isValid);
+    if (err && errText) err.textContent = errText;
+  }
+
+  function clearFieldState(id) {
+    const input = document.getElementById(id);
+    const field = document.getElementById('field-' + id);
+    if (input) { input.classList.remove('valid','invalid'); }
+    if (field) field.classList.remove('has-error');
+  }
+
+  /* ── CHAR COUNTER ────────────────────────────────────────────── */
+  function updateCounter() {
+    const len = document.getElementById('message').value.length;
+    document.getElementById('char-count').textContent = len;
+  }
+
+  /* ── SUBMIT HANDLER ──────────────────────────────────────────── */
+  function handleSubmit() {
+    if (!validate()) {
+      showToast('⚠️ Please fix the highlighted fields.');
+      return;
+    }
+
+    const btn = document.querySelector('.btn-submit');
+    btn.classList.add('loading');
+
+    // simulate API delay
+    setTimeout(() => {
+      const entry = {
+        id:      Date.now().toString(36),
+        name:    document.getElementById('name').value.trim(),
+        email:   document.getElementById('email').value.trim(),
+        phone:   document.getElementById('phone').value.trim(),
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value.trim(),
+        date:    new Date().toISOString(),
+      };
+
+      saveSubmission(entry);
+      btn.classList.remove('loading');
+
+      // Show success
+      document.getElementById('contact-form').style.display = 'none';
+      document.getElementById('success-box').classList.add('show');
+      showToast('✅ Message saved successfully!');
+    }, 1200);
+  }
+
+  /* ── RESET FORM ──────────────────────────────────────────────── */
+  function resetForm() {
+    document.getElementById('contact-form').reset();
+    document.getElementById('contact-form').style.display = 'block';
+    document.getElementById('success-box').classList.remove('show');
+    document.getElementById('char-count').textContent = '0';
+    // clear validation states
+    document.querySelectorAll('input, textarea, select').forEach(el => {
+      el.classList.remove('valid','invalid');
+    });
+    document.querySelectorAll('.field').forEach(f => f.classList.remove('has-error'));
+    document.querySelectorAll('.error-msg').forEach(e => e.style.display = 'none');
+  }
+
+  /* ── ADMIN TABLE ─────────────────────────────────────────────── */
+  function renderTable() {
+    const query = (document.getElementById('search-input')?.value || '').toLowerCase();
+    const list  = getSubmissions().filter(s =>
+      s.name.toLowerCase().includes(query)    ||
+      s.email.toLowerCase().includes(query)   ||
+      s.subject.toLowerCase().includes(query) ||
+      s.message.toLowerCase().includes(query)
+    );
+
+    const all   = getSubmissions();
+    const now   = new Date();
+    const today = now.toDateString();
+    const weekAgo = new Date(now - 7*864e5);
+
+    document.getElementById('stat-total').textContent = all.length;
+    document.getElementById('stat-today').textContent = all.filter(s => new Date(s.date).toDateString() === today).length;
+    document.getElementById('stat-week').textContent  = all.filter(s => new Date(s.date) >= weekAgo).length;
+    document.getElementById('total-badge').textContent = all.length + ' total';
+
+    const tbody = document.getElementById('submissions-body');
+
+    if (list.length === 0) {
+      tbody.innerHTML = `<tr><td colspan="7">
+        <div class="empty-state">
+          <div class="empty-icon">📭</div>
+          <p>${query ? 'No results found.' : 'No submissions yet. Be the first to reach out!'}</p>
+        </div>
+      </td></tr>`;
+      return;
+    }
+
+    tbody.innerHTML = list.map((s, i) => `
+      <tr>
+        <td style="color:var(--ink-soft);font-size:.78rem">${i+1}</td>
+        <td class="td-name">${esc(s.name)}</td>
+        <td class="td-email">${esc(s.email)}</td>
+        <td><span class="badge">${esc(s.subject)}</span></td>
+        <td class="td-msg"><div class="td-msg-text">${esc(s.message)}</div></td>
+        <td class="td-date">${fmtDate(s.date)}</td>
+        <td>
+          <button class="btn-del" title="Delete" onclick="delRow('${s.id}')">🗑</button>
+        </td>
+      </tr>
+    `).join('');
+  }
+
+  function delRow(id) {
+    deleteSubmission(id);
+    renderTable();
+    showToast('🗑 Entry deleted.');
+  }
+
+  function clearAll() {
+    if (!confirm('Delete ALL submissions? This cannot be undone.')) return;
+    clearSubmissions();
+    renderTable();
+    showToast('All submissions cleared.');
+  }
+
+  /* ── CSV EXPORT ──────────────────────────────────────────────── */
+  function exportCSV() {
+    const list = getSubmissions();
+    if (!list.length) { showToast('No data to export.'); return; }
+    const hdr = ['#','Name','Email','Phone','Subject','Message','Date'];
+    const rows = list.map((s,i) => [
+      i+1, csvVal(s.name), csvVal(s.email), csvVal(s.phone||''),
+      csvVal(s.subject), csvVal(s.message), fmtDate(s.date)
+    ]);
+    const csv = [hdr, ...rows].map(r => r.join(',')).join('\n');
+    const blob = new Blob([csv], { type:'text/csv' });
+    const a = Object.assign(document.createElement('a'), {
+      href: URL.createObjectURL(blob),
+      download: 'she-can-submissions.csv'
+    });
+    a.click();
+    showToast('📥 CSV exported!');
+  }
+
+  /* ── HELPERS ─────────────────────────────────────────────────── */
+  function esc(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  function csvVal(v) {
+    return '"' + String(v).replace(/"/g,'""') + '"';
+  }
+
+  function fmtDate(iso) {
+    const d = new Date(iso);
+    return d.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' })
+           + ' ' + d.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+  }
+
+  /* ── TOAST ───────────────────────────────────────────────────── */
+  let toastTimer;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  /* ── LIVE VALIDATION (on blur) ───────────────────────────────── */
+  ['name','email','phone','message'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.addEventListener('blur', () => {
+      if (el.value.trim()) validate();
+    });
+  });
+
+  /* ── INIT ────────────────────────────────────────────────────── */
+  renderTable();
+</script>
+</body>
+</html>
