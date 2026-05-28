@@ -172,7 +172,7 @@
 
     label .req { color: var(--rose); font-size: .9rem; }
 
-    input, textarea, select {
+    input:not([type="checkbox"]), textarea, select {
       width: 100%;
       font-family: var(--font-body);
       font-size: .96rem;
@@ -186,18 +186,26 @@
       -webkit-appearance: none;
     }
 
-    input:focus, textarea:focus, select:focus {
+    input[type="checkbox"] {
+      width: 18px; height: 18px;
+      min-width: 18px;
+      cursor: pointer;
+      accent-color: var(--rose);
+      margin-top: .15rem;
+    }
+
+    input:not([type="checkbox"]):focus, textarea:focus, select:focus {
       border-color: var(--rose);
       background: #fff;
       box-shadow: 0 0 0 3px rgba(192,98,122,.12);
     }
 
-    input.invalid, textarea.invalid {
+    input:not([type="checkbox"]).invalid, textarea.invalid {
       border-color: var(--error);
       box-shadow: 0 0 0 3px rgba(224,92,106,.1);
     }
 
-    input.valid, textarea.valid {
+    input:not([type="checkbox"]).valid, textarea.valid {
       border-color: var(--success);
     }
 
@@ -575,15 +583,12 @@
           </div>
 
           <!-- CONSENT -->
-     <!-- CONSENT -->
-<div class="field" id="field-consent" style="display:flex;gap:.8rem;align-items:flex-start;margin-bottom:1.8rem">
-  <input type="checkbox" id="consent" style="width:auto;margin-top:.2rem;accent-color:var(--rose)"/>
-  
-  <label for="consent" style="text-transform:none;letter-spacing:0;font-size:.83rem;font-weight:400;color:var(--ink-mid)">
-    I agree to She Can Foundation's Privacy Policy and consent to being contacted.
-    <span class="req">*</span>
-  </label>
-</div>
+          <div class="field" id="field-consent" style="display:flex;gap:.8rem;align-items:flex-start;margin-bottom:1.8rem">
+            <input type="checkbox" id="consent"/>
+            <label for="consent" style="text-transform:none;letter-spacing:0;font-size:.83rem;font-weight:400;color:var(--ink-mid)">
+              I agree to She Can Foundation's Privacy Policy and consent to being contacted. <span class="req">*</span>
+            </label>
+          </div>
           <div class="error-msg" id="err-consent" style="margin-top:-1rem;margin-bottom:1rem">You must accept the consent checkbox.</div>
 
           <button type="button" class="btn-submit" onclick="handleSubmit()">
@@ -660,7 +665,7 @@
 
 <!-- ── FOOTER ───────────────────────────────────────────────────── -->
 <footer>
-  Made with <span>♥</span> for She Can Foundation &nbsp;·&nbsp; &copy; 2026
+  Made with <span>♥</span> for She Can Foundation &nbsp;·&nbsp; &copy; 2024
 </footer>
 
 <!-- ── JAVASCRIPT ────────────────────────────────────────────────── -->
